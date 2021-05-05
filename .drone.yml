@@ -1,0 +1,51 @@
+---
+kind: pipeline
+name: linux-pipeline-jdk11
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: mavenjdk11
+    pull: always
+    image: docker.io/maven:3.6.3-jdk-11-slim
+    commands:
+      - mvn -V clean verify --fail-at-end --batch-mode
+---
+kind: pipeline
+name: linux-pipeline-jdk15
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: mavenjdk15
+    pull: always
+    image: docker.io/maven:3.6.3-openjdk-15-slim
+    commands:
+      - mvn -V clean verify --fail-at-end --batch-mode
+
+---
+kind: pipeline
+name: linux-pipeline-jdk16
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: mavenjdk16
+    pull: always
+    image: docker.io/maven:3.6.3-openjdk-16-slim
+    commands:
+      - mvn -V clean verify --fail-at-end --batch-mode
+
+depends_on:
+  - linux-pipeline-jdk15
+  - linux-pipeline-jdk11
+
